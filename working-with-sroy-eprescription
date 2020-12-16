@@ -21,8 +21,15 @@ sudo /opt/bitnami/ctlscript.sh restart
 
 
 //Database migration from a database to another database.
+Step-1
 
-Step-1 (Truncate): 
+Create database named sroy_healthzone
+
+Step-2
+
+Import the target database (original database)
+
+Step-2 (Truncate): 
 
 truncate	allergy_master	;
 truncate	chamber_owner	;
@@ -54,7 +61,7 @@ truncate	social_history_master	;
 truncate	user_otp	;
 truncate	visit	;
 
-Set default doc_id and chamber_id w.r.t the chamber and doctor master
+-- Set default doc_id and chamber_id w.r.t the chamber and doctor master
 
 ALTER TABLE 	allergy_master	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
 ALTER TABLE 	clinical_impression	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
@@ -110,7 +117,78 @@ ALTER TABLE 	sms_sent_info	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
 ALTER TABLE 	social_history_master	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
 ALTER TABLE 	visit	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
 
+Step 4
 
-Step-4 (import the file from another server)
+--Run this from the target database
 
-Step-5 - Export the database without choosing the tables chamber_master, chamber_owner, doctor_master, user, user_master
+INSERT INTO `clinical_impression` (`ID`, `TYPE`, `DESCRIPTION`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`,`doc_id`) 
+select ID, TYPE, DESCRIPTION, chamber_id, created_by_user_id, create_date, isSync, doc_id from sroy_healthzone.clinical_impression;
+
+
+
+INSERT INTO `dose_details_master` (`DOSE_DETAILS_MASTER_ID`, `DOSE_DETAILS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`)
+select `DOSE_DETAILS_MASTER_ID`, `DOSE_DETAILS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.dose_details_master;
+
+
+
+INSERT INTO `dose_direction` (`DOSE_DIRECTION_ID`, `DIRECTION`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`)
+SELECT `DOSE_DIRECTION_ID`, `DIRECTION`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.dose_direction;
+
+
+
+INSERT INTO `dose_timing_master` (`DOSE_TIMING_ID`, `TIMING`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`)
+SELECT `DOSE_TIMING_ID`, `TIMING`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.dose_timing_master;
+
+
+
+INSERT INTO `investigation_master` (`investigation_name`, `investigation_type`, `unit`, `STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`)
+SELECT `investigation_name`, `investigation_type`, `unit`, `STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.investigation_master;
+
+
+
+
+INSERT INTO `medicine_master` (`MEDICINE_ID`, `MEDICINE_NAME`, `MEDICINE_DIRECTION`, `MEDICINE_ENTRY_DATE_TIME`, `MEDICINE_STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
+SELECT `MEDICINE_ID`, `MEDICINE_NAME`, `MEDICINE_DIRECTION`, `MEDICINE_ENTRY_DATE_TIME`, `MEDICINE_STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.medicine_master;
+
+
+
+INSERT INTO `patient` (`patient_id`, `GENDER`, `patient_first_name`, `patient_last_name`, `patient_name`, `patient_address`, `patient_city`, `patient_dob`, `age`, `patient_cell_num`, `patient_alt_cell_num`, `patient_email`, `data_entry_date`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
+SELECT `patient_id`, `GENDER`, `patient_first_name`, `patient_last_name`, `patient_name`, `patient_address`, `patient_city`, `patient_dob`, `age`, `patient_cell_num`, `patient_alt_cell_num`, `patient_email`, `data_entry_date`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.patient;
+
+
+INSERT INTO `patient_health_details` (`ID`, `VALUE`, `VISIT_ID`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`)
+SELECT `ID`, `VALUE`, `VISIT_ID`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.patient_health_details;
+
+
+INSERT INTO `patient_health_details_master` (`ID`, `NAME`, `STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
+select `ID`, `NAME`, `STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.patient_health_details_master;
+
+
+
+INSERT INTO `patient_investigation` (`patient_id`, `visit_id`, `investigation_id`, `value`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
+select `patient_id`, `visit_id`, `investigation_id`, `value`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.patient_investigation;
+
+
+
+INSERT INTO `precribed_medicine` (`MEDICINE_ID`, `PRESCRIPTION_ID`, `MEDICINE_NAME`, `MEDICINE_DIRECTION`, `MEDICINE_DOSE`, `MEDICINE_TIMING`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
+select `MEDICINE_ID`, `PRESCRIPTION_ID`, `MEDICINE_NAME`, `MEDICINE_DIRECTION`, `MEDICINE_DOSE`, `MEDICINE_TIMING`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.precribed_medicine;
+
+
+
+INSERT INTO `prescribed_cf` (`clinical_impression_id`, `prescription_id`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
+select `clinical_impression_id`, `prescription_id`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.prescribed_cf;
+
+
+
+INSERT INTO `prescribed_investigation` (`PRESCRIBED_INVESTIGATION_ID`, `PRESCRIPTION_ID`, `INVESTIGATION_TYPE`, `INVESTIGATION_DESCRIPTION`, `INVESTIGATION_ID`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
+select `PRESCRIBED_INVESTIGATION_ID`, `PRESCRIPTION_ID`, `INVESTIGATION_TYPE`, `INVESTIGATION_DESCRIPTION`, `INVESTIGATION_ID`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.prescribed_investigation;
+
+
+
+INSERT INTO `prescription` (`PRESCRIPTION_ID`, `VISIT_ID`, `REFERRED_TO`, `DIET`, `NEXT_VISIT`, `ANY_OTHER_DETAILS`, `STATUS`, `NEXT_VISIT_DAY`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`, `NEXT_VISIT_DT`) 
+select `PRESCRIPTION_ID`, `VISIT_ID`, `REFERRED_TO`, `DIET`, `NEXT_VISIT`, `ANY_OTHER_DETAILS`, `STATUS`, `NEXT_VISIT_DAY`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`, `NEXT_VISIT_DT` from sroy_healthzone.prescription;
+
+
+INSERT INTO `visit` (`VISIT_ID`, `PATIENT_ID`, `VISIT_DATE`, `APPOINTMENT_TO_DOC_NAME`, `VISITED`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
+select `VISIT_ID`, `PATIENT_ID`, `VISIT_DATE`, `APPOINTMENT_TO_DOC_NAME`, `VISITED`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.visit;
+
