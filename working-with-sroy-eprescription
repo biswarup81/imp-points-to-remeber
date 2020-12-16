@@ -22,19 +22,17 @@ sudo /opt/bitnami/ctlscript.sh restart
 
 //Database migration from a database to another database.
 Step-1
+------
+Export the database which you want to update.
 shell> mysqldump -u root -p sroy > sroy.sql
+create a blank database
 shell> mysqladmin -u root -p create sroy_healthzone
+import the exported database. This means you've just copied the old database.
 shell> mysql -u root -p sroy_healthzone < sroy.sql
 
 
-Create database named sroy_healthzone
-
-Step-2
-
-Import the target database (original database)
-
 Step-2 (Truncate): 
-
+-----------------
 truncate	allergy_master	;
 truncate	chamber_owner	;
 truncate	clinical_impression	;
@@ -122,11 +120,11 @@ ALTER TABLE 	social_history_master	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
 ALTER TABLE 	visit	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
 
 Step-3
-
+------
 Import the SQL file exported from the old database.
 
 Step 4
-
+-----
 --Run this from the target database
 
 INSERT INTO `clinical_impression` (`ID`, `TYPE`, `DESCRIPTION`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`,`doc_id`) 
