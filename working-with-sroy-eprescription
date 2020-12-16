@@ -22,6 +22,10 @@ sudo /opt/bitnami/ctlscript.sh restart
 
 //Database migration from a database to another database.
 Step-1
+shell> mysqldump -u root -p sroy > sroy.sql
+shell> mysqladmin -u root -p create sroy_healthzone
+shell> mysql -u root -p sroy_healthzone < sroy.sql
+
 
 Create database named sroy_healthzone
 
@@ -117,6 +121,10 @@ ALTER TABLE 	sms_sent_info	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
 ALTER TABLE 	social_history_master	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
 ALTER TABLE 	visit	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
 
+Step-3
+
+Import the SQL file exported from the old database.
+
 Step 4
 
 --Run this from the target database
@@ -186,4 +194,10 @@ select `PRESCRIPTION_ID`, `VISIT_ID`, `REFERRED_TO`, `DIET`, `NEXT_VISIT`, `ANY_
 
 INSERT INTO `visit` (`VISIT_ID`, `PATIENT_ID`, `VISIT_DATE`, `APPOINTMENT_TO_DOC_NAME`, `VISITED`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
 select `VISIT_ID`, `PATIENT_ID`, `VISIT_DATE`, `APPOINTMENT_TO_DOC_NAME`, `VISITED`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.visit;
+
+
+-- Add these (Important)
+Ideal Body Weight (KG), 3
+
+INSERT INTO `patient_health_details_master` ( `ID`, `NAME`, `STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) VALUES (83, 'Ideal Body Weight (KG)', 'ACTIVE', '2', '2', CURRENT_TIMESTAMP, '0', '2');
 
