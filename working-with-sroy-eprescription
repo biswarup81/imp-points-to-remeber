@@ -18,3 +18,94 @@ sudo /opt/bitnami/ctlscript.sh stop
 Restart the services by running the script without any arguments:
 
 sudo /opt/bitnami/ctlscript.sh restart
+
+
+//Database migration from a database to another database.
+
+Step-1 (Truncate): 
+
+truncate	allergy_master	;
+truncate	chamber_owner	;
+truncate	clinical_impression	;
+truncate	constant	;
+truncate	doctor_master	;
+truncate	dose_details_master	;
+truncate	dose_direction	;
+truncate	dose_timing_master	;
+truncate	investigation_master	;
+truncate	lmp	;
+truncate	medicine_master	;
+truncate	past_medical_history_master	;
+truncate	patient	;
+truncate	patient_health_details	;
+truncate	patient_health_details_by_receptionist	;
+truncate	patient_health_details_master	;
+truncate	patient_investigation	;
+truncate	precribed_medicine	;
+truncate	prescribed_allergy	;
+truncate	prescribed_cf	;
+truncate	prescribed_investigation	;
+truncate	prescribed_past_med_history	;
+truncate	prescribed_social_history	;
+truncate	prescription	;
+truncate	reception_master	;
+truncate	sms_sent_info	;
+truncate	social_history_master	;
+truncate	user_otp	;
+truncate	visit	;
+
+Set default doc_id and chamber_id w.r.t the chamber and doctor master
+
+ALTER TABLE 	allergy_master	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	clinical_impression	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	constant	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	dose_details_master	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	dose_direction	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	dose_timing_master	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	investigation_master	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	lmp	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	medicine_master	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	past_medical_history_master	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	patient	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	patient_health_details	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	patient_health_details_by_receptionist	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	patient_health_details_master	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	patient_investigation	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	precribed_medicine	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	prescribed_allergy	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	prescribed_cf	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	prescribed_investigation	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	prescribed_past_med_history	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	prescribed_social_history	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	prescription	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	sms_sent_info	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	social_history_master	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	visit	CHANGE chamber_id chamber_id INT NOT NULL DEFAULT 2;
+
+
+
+ALTER TABLE 	allergy_master	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	clinical_impression	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	constant	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	dose_details_master	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	dose_direction	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	dose_timing_master	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	investigation_master	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	lmp	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	medicine_master	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	past_medical_history_master	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	patient	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	patient_health_details	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	patient_health_details_by_receptionist	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	patient_health_details_master	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	patient_investigation	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	precribed_medicine	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	prescribed_allergy	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	prescribed_cf	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	prescribed_investigation	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	prescribed_past_med_history	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	prescribed_social_history	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	prescription	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	sms_sent_info	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	social_history_master	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+ALTER TABLE 	visit	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
