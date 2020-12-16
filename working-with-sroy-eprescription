@@ -109,3 +109,8 @@ ALTER TABLE 	prescription	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
 ALTER TABLE 	sms_sent_info	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
 ALTER TABLE 	social_history_master	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
 ALTER TABLE 	visit	CHANGE doc_id doc_id INT NOT NULL DEFAULT 2;
+
+
+Step-4 (import the file from another server)
+
+Step-5 - Export the database without choosing the tables chamber_master, chamber_owner, doctor_master, user, user_master
