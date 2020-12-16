@@ -140,11 +140,8 @@ INSERT INTO `dose_timing_master` (`DOSE_TIMING_ID`, `TIMING`, `chamber_id`, `cre
 SELECT `DOSE_TIMING_ID`, `TIMING`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.dose_timing_master;
 
 
-
-INSERT INTO `investigation_master` (`investigation_name`, `investigation_type`, `unit`, `STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`)
-SELECT `investigation_name`, `investigation_type`, `unit`, `STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.investigation_master;
-
-
+INSERT INTO `investigation_master` (ID, `investigation_name`, `investigation_type`, `unit`, `STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`)
+SELECT ID, `investigation_name`, `investigation_type`, `unit`, `STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.investigation_master;
 
 
 INSERT INTO `medicine_master` (`MEDICINE_ID`, `MEDICINE_NAME`, `MEDICINE_DIRECTION`, `MEDICINE_ENTRY_DATE_TIME`, `MEDICINE_STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
@@ -183,10 +180,8 @@ select `clinical_impression_id`, `prescription_id`, `chamber_id`, `created_by_us
 INSERT INTO `prescribed_investigation` (`PRESCRIBED_INVESTIGATION_ID`, `PRESCRIPTION_ID`, `INVESTIGATION_TYPE`, `INVESTIGATION_DESCRIPTION`, `INVESTIGATION_ID`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
 select `PRESCRIBED_INVESTIGATION_ID`, `PRESCRIPTION_ID`, `INVESTIGATION_TYPE`, `INVESTIGATION_DESCRIPTION`, `INVESTIGATION_ID`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.prescribed_investigation;
 
-
-
-INSERT INTO `prescription` (`PRESCRIPTION_ID`, `VISIT_ID`, `REFERRED_TO`, `DIET`, `NEXT_VISIT`, `ANY_OTHER_DETAILS`, `STATUS`, `NEXT_VISIT_DAY`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`, `NEXT_VISIT_DT`) 
-select `PRESCRIPTION_ID`, `VISIT_ID`, `REFERRED_TO`, `DIET`, `NEXT_VISIT`, `ANY_OTHER_DETAILS`, `STATUS`, `NEXT_VISIT_DAY`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`, `NEXT_VISIT_DT` from sroy_healthzone.prescription;
+INSERT INTO `prescription` (`PRESCRIPTION_ID`, `VISIT_ID`, `REFERRED_TO`, `DIET`, `NEXT_VISIT`, `ANY_OTHER_DETAILS`, `STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
+select `PRESCRIPTION_ID`, `VISIT_ID`, `REFERRED_TO`, `DIET`, `NEXT_VISIT`, `ANY_OTHER_DETAILS`, `STATUS`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id` from sroy_healthzone.prescription;
 
 
 INSERT INTO `visit` (`VISIT_ID`, `PATIENT_ID`, `VISIT_DATE`, `APPOINTMENT_TO_DOC_NAME`, `VISITED`, `chamber_id`, `created_by_user_id`, `create_date`, `isSync`, `doc_id`) 
